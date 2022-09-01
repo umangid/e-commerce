@@ -97,7 +97,7 @@ function Dashboard() {
                                     ProductDesc(product)
                                 }}>
                                 <div className="ProImageDiv">
-                                    <img src={product.url} />
+                                    <img src={product.url} style={{ width: '70%' }} />
                                 </div>
                                 <span className="ProdTitle">
                                     {product.title}

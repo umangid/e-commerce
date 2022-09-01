@@ -45,6 +45,9 @@
 .ProImageDiv {
   height: 300px;
   padding: 3%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .ProdTitle {

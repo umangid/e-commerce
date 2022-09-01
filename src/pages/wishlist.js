@@ -21,7 +21,7 @@ function Wishlist() {
                         return (
                             <div key={i} className="ProdCard">
                                 <div className="ProImageDiv">
-                                    <img src={prodList.url} />
+                                    <img src={prodList.url} style={{ width: '70%' }} />
                                 </div>
                                 <span className="ProdTitle">
                                     {prodList.title}

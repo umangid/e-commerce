@@ -16,12 +16,12 @@ function AddToCart() {
             </div>
             <div>
                 {
-                    CartArr.lenght > 0 ?
+                    CartArr.length > 0 ?
                         (CartArr.map((prodList, i) => {
                             return (
                                 <div key={i} className="ProdCard">
                                     <div className="ProImageDiv">
-                                        <img src={prodList.url} />
+                                        <img src={prodList.url} style={{ width: '70%' }} />
                                     </div>
                                     <span className="ProdTitle">
                                         {prodList.title}
