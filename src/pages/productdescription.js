@@ -38,7 +38,7 @@ function ProductDesc() {
             <div>
                 <div className="ProdCard">
                     <div className="ProImageDiv">
-                        <img src={Product.url} />
+                        <img src={Product.url} style={{ width: '70%' }} />
                     </div>
                     <span className="ProdTitle">
                         {Product.title}
