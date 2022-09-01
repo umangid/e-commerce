@@ -6,6 +6,10 @@ import productReducer from './pages/redux/productReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard';
+import AddToCart from './pages/addtocart';
+import Wishlist from './pages/wishlist';
+import ProductDesc from './pages/productdescription';
+import PrivateRoutes from "./pages/PrivateRoutes";
 function App() {
   const { localStorage } = window;
   const store = configureStore({
@@ -14,39 +18,17 @@ function App() {
 
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
-  const PrivateRoute = ({
-    component,
-    ...rest
-  }) => {
-    if (isAuthenticated === true) {
-      return <Route {...rest} render={(props) => component} />;
-    } else {
-      return (
-        <Route
-          {...rest}
-          render={(props) =>
-            window.location.href = "/"
-          }
-        />
-      );
-    }
-  };
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          {/* <Route
-            exact
-            path="/"
-            component={<Login />} /> */}
-          {/* <PrivateRoute
-            exact
-            path="/Dashboard"
-            component={
-              <Dashboard />
-            } /> */}
-          <Route path='/' element={<Login />} />
-          <Route path='/Dashboard' element={<Dashboard />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path='/AddToCart' element={<AddToCart />} />
+            <Route path='/Wishlist' element={<Wishlist />} />
+          </Route>
+          <Route path="/" element={<Login />} exact />
+          <Route path="/Dashboard" element={<Dashboard />} exact />
+          <Route path="/ProductDesc" element={<ProductDesc />} exact />
         </Routes>
       </BrowserRouter>
     </Provider>

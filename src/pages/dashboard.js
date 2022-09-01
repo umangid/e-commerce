@@ -1,75 +1,157 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProduct } from './redux/productReducer'
+import { fetchProduct, setCart, setWishList } from './redux/productReducer';
+import { useNavigate } from "react-router-dom";
+import './css/pages.css'
+import RsImg from './assets/rupee.png';
+import CartImg from './assets/shopping-cart.png'
+import Wishlist from './assets/like.png';
+import Logout from './assets/logout.png';
 function Dashboard() {
-    const { ProdArr } = useSelector((state) => state)
-    console.log(ProdArr);
-    // const ProdArr = [{
-    //     "id": 3,
-    //     "title": "Roadster",
-    //     "desc": "Under 799",
-    //     "del_Text": '3,795',
-    //     "original_Text": '789',
-    //     "off_price": 'Rs.3036 OFF',
-    //     "Best": 'NEW SEASON',
-    //     'Qty': 0,
-    //     'url': require('./assets/149680-4036957282.jpeg')
-    // }, {
-    //     "id": 4,
-    //     "title": "H&M",
-    //     "desc": "Men Solid Canvas Espadrilles",
-    //     "del_Text": '1,299',
-    //     "original_Price": '909',
-    //     "off_price": '30% OFF',
-    //     "Best": 'BESTSELLER',
-    //     'Qty': 0,
-    //     'url': require('./assets/th-1141034874.jpeg')
-    // }, {
-    //     "id": 5,
-    //     "title": "Mast & Haubour",
-    //     "desc": "Men Striped Sneakers",
-    //     "del_Text": '2,699',
-    //     "original_Price": '999',
-    //     "off_price": 'Rs.1700 OFF',
-    //     "Best": 'BESTSELLER',
-    //     'Qty': 0,
-    //     'url': require('./assets/th-2150170442.jpeg')
-    // }, {
-    //     "id": 6,
-    //     "title": "Roadster",
-    //     "desc": "Men Textured Sneakers",
-    //     "del_Text": '4,495',
-    //     "original_Price": '796',
-    //     "off_price": 'Rs.3731 OFF',
-    //     "Best": 'BESTSELLER',
-    //     'Qty': 0,
-    //     'url': require('./assets/th-1849034584.jpeg')
-    // }]
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const fetchState = useSelector((state) => state)
+    // console.log(fetchState.ProdArr);
+
+
+    const AddTOCart = (NewArr) => {
+        const MyVar = fetchState.CartArr
+        const MyArr = [...MyVar, NewArr];
+        dispatch(setCart(MyArr));
+        // console.log('............................Add to Cart', MyArr)
+        alert(`${NewArr.title} added to cart`)
+        // navigate("/AddToCart")
+    }
+
+    const AddTOWishlist = (NewArr) => {
+        const MyVar = fetchState.WishListArr
+        const MyArr = [...MyVar, NewArr];
+        dispatch(setWishList(MyArr));
+        // console.log('............................Add to Wishlist', MyArr)
+        alert(`${NewArr.title} added to Wishlist`)
+        // navigate("/Wishlist")
+    }
+
+
+    const NoOfProInCart = fetchState.CartArr;
+    const CartArrLen = NoOfProInCart.length
+    // alert(CartArrLen)
+
+    const NoOfProInWishlist = fetchState.WishListArr;
+    const WishlistArrLen = NoOfProInWishlist.length
+    // alert(WishlistArrLen)
+
+
+    const handleAddToCart = () => {
+        navigate("/AddToCart")
+    }
+
+    const handleAddToWishlist = () => {
+        navigate("/Wishlist")
+    }
+
+
+    const ProductDesc = (Product) => {
+        console.log('MyProd', Product)
+        window.localStorage.setItem("ProdDesc", JSON.stringify(Product))
+        navigate("/ProductDesc")
+    }
+
+    useEffect(() => {
+        window.localStorage.setItem("ProdDesc", JSON.stringify({}))
+    })
+
+    const handleLogout = () => {
+        window.localStorage.clear()
+        navigate("/")
+    }
+
 
     return (
-        <div>
-            {ProdArr.map((prodList, i) => {
-                return (
-                    <div key={i} style={{border:'1px solid black'}}>
-                        <span>
-                            {prodList.title}
-                        </span>
-                        <p>
-                            {prodList.desc}
-                        </p>
-                        <span>
-                            {prodList.original_Price}
-                        </span>
-                        <span>
-                            {prodList.del_Text}
-                        </span>
-                        <p>
-                            {prodList.off_price}
-                        </p>
+        <>
+            <div className="AddToCartDiv">
+                <span className="pageHeader">
+                    Dashboard
+                </span>
+                <div className="AddToCartImgParent">
+                    <div style={{ marginRight: '20px', cursor: 'pointer' }} onClick={handleAddToWishlist}>
+                        <img src={Wishlist} style={{ width: '43px' }} />
+                        <span className="notify-badgeWishlist">{WishlistArrLen}</span>
                     </div>
-                )
-            })}
-        </div>
+                    <div onClick={handleAddToCart} style={{ cursor: 'pointer', marginRight: '20px' }}>
+                        <img src={CartImg} style={{ width: '43px' }} />
+                        <span className="notify-badgeCart">{CartArrLen}</span>
+                    </div>
+                    <div
+                        onClick={handleLogout}>
+                        <img src={Logout} style={{ width: '43px', cursor: 'pointer' }} />
+                    </div>
+                </div>
+            </div>
+            <div>
+                {fetchState.ProdArr.map((product, i) => {
+                    return (
+                        <div key={i} className="ProdCard">
+                            <div
+                                onClick={() => {
+                                    ProductDesc(product)
+                                }}>
+                                <div className="ProImageDiv">
+                                    <img src={product.url} />
+                                </div>
+                                <span className="ProdTitle">
+                                    {product.title}
+                                </span>
+                                <p className="ProdDesc">
+                                    {product.desc}
+                                </p>
+                                <p className="ProdOriginalPriceDiv">
+                                    <img src={RsImg} className="OriginalRsImage" />
+                                    <span className="ProdOriginalPrice">
+                                        {product.original_Price}
+                                    </span>
+                                </p>
+                                <div style={{ clear: 'both', padding: '0px 5%' }}>
+                                    <img src={RsImg} className="RsImage" />
+                                    <span className="ProdDelText">
+                                        {product.del_Text}
+                                    </span>
+                                    <span className="ProdOffPrice">
+                                        {product.off_price}
+                                    </span>
+                                </div>
+                                <p>
+                                    <span className="GetIt">
+                                        Get it by
+                                    </span>
+                                    <span className="GetItBy">
+                                        {product.getIt}
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div className="AddToCartProd">
+                                <span className="AddToCartProdText"
+                                    onClick={() => {
+                                        AddTOCart(product)
+                                    }}>
+                                    Add To Cart
+                                </span>
+                            </div>
+                            <div className="AddToWishlistProd">
+                                <span className="AddToWishlistProdText"
+                                    onClick={() => {
+                                        AddTOWishlist(product)
+                                    }}>
+                                    Add to Wishlist
+                                </span>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        </>
+
     );
 }
 
