@@ -1,24 +1,56 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from 'react-redux';
+import productReducer from './pages/redux/productReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import Login from './pages/login';
+import Dashboard from './pages/dashboard';
 function App() {
+  const { localStorage } = window;
+  const store = configureStore({
+    reducer: productReducer
+  })
+
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+  const PrivateRoute = ({
+    component,
+    ...rest
+  }) => {
+    if (isAuthenticated === true) {
+      return <Route {...rest} render={(props) => component} />;
+    } else {
+      return (
+        <Route
+          {...rest}
+          render={(props) =>
+            window.location.href = "/"
+          }
+        />
+      );
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route
+            exact
+            path="/"
+            component={<Login />} /> */}
+          {/* <PrivateRoute
+            exact
+            path="/Dashboard"
+            component={
+              <Dashboard />
+            } /> */}
+          <Route path='/' element={<Login />} />
+          <Route path='/Dashboard' element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+
   );
 }
 

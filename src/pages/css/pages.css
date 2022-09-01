@@ -1,0 +1,28 @@
+.login {
+    background-color: rgb(206, 206, 237);
+    margin: 0 auto;
+    width: 35%;
+    border-radius: 5px;
+}
+
+.loginHeader {
+    padding: 30px;
+    margin: 3% 38%;
+}
+
+.loginInput {
+    height: 30px;
+    width: 45%;
+    margin: 3% 27%;
+}
+
+.LoginButton {
+    padding: 6px 25px;
+    background-color: #aa0a6b;
+    color: #fff;
+    font-weight: bold;
+    font-size: 17px;
+    border: 2px solid beige;
+    border-radius: 5px;
+    margin: 3% 41%;
+}
