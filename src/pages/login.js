@@ -44,7 +44,7 @@ function Login() {
                     className="loginInput"
                 ></input><br></br>
                 <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     onChange={(e) => setLoginPass(e.target.value)}
                     className="loginInput"

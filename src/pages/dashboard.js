@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProduct, setCart, setWishList } from './redux/productReducer';
+import { setCart, setWishList } from './redux/productReducer';
 import { useNavigate } from "react-router-dom";
 import './css/pages.css'
 import RsImg from './assets/rupee.png';

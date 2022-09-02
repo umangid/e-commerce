@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProduct } from './redux/productReducer';
 import './css/pages.css'
 import RsImg from './assets/rupee.png';
 function AddToCart() {

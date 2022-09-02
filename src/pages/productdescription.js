@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import './css/pages.css'
 import RsImg from './assets/rupee.png';
-import { fetchProduct, setCart, setWishList } from './redux/productReducer';
+import { setCart, setWishList } from './redux/productReducer';
 
 function ProductDesc() {
     const [Product, setProduct] = useState(JSON.parse(localStorage.getItem("ProdDesc")));
